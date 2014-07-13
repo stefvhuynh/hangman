@@ -14,8 +14,28 @@ class HumanPlayer
     word_length.to_i
   end
   
-  def respond_to_guess(letter)
+  def respond_to_guess(guessed_letter)    
+    begin
+      print "Is this letter in your word? (y/n) "
+      puts guessed_letter
+      response = gets.chomp
+      raise UserError if response =~ /[^y|n|Y|N]/
+    rescue UserError
+      puts "Enter y or n!"
+      retry
+    end
+    return [] if response.downcase =~ /n/
     
+    begin
+      print "Where does this letter occur? (enter numbers separated by commas) "
+      positions = gets.chomp
+      raise UserError if positions =~ /[^0-9|,]/
+    rescue UserError
+      puts "Enter numbers separated by commas!"
+      retry
+    end
+    
+    positions.split(/,/).map(&:to_i)  
   end
   
   def secret_word

@@ -17,16 +17,16 @@ class ComputerPlayer
     @secret_word.length
   end
   
-  def respond_to_guess(letter)
+  def respond_to_guess(guessed_letter)
     [].tap do |letter_positions|
       @secret_word.each_char.with_index do |char, index|
-        letter_positions << index if char == letter
+        letter_positions << index if char == guessed_letter
       end
     end
   end
   
   def make_guess(wrong_letters, right_letters)
-    
+    ("a".."z").to_a.sample
   end
   
 end

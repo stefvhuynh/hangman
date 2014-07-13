@@ -68,16 +68,19 @@ class Hangman
 end
 
 
-if __FILE__ == $PROGRAM_NAME
+if __FILE__ == $PROGRAM_NAME  
   human = HumanPlayer.new
   computer = ComputerPlayer.new
   
   if ARGV.empty?
     Hangman.new(human, computer).play
   else    
-    case ARGV
+    args = ARGV.dup
+    ARGV.clear
+    
+    case args
     when ["human", "computer"]
-      Hangman.new(human, cpu).play
+      Hangman.new(human, computer).play
     when ["human", "human"]
       Hangman.new(human, human).play
     when ["computer", "human"]
