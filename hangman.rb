@@ -36,8 +36,8 @@ class Hangman
     end
     
     display_board
-    puts @wrong_guesses == 6 ? "The chooser wins!" : "The guesser wins!"
     puts "The word was: #{@chooser.secret_word}"
+    puts @wrong_guesses == 6 ? "The chooser wins!" : "The guesser wins!"
   end
   
   private

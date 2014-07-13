@@ -16,8 +16,7 @@ class HumanPlayer
   
   def respond_to_guess(guessed_letter)    
     begin
-      print "Is this letter in your word? (y/n) "
-      puts guessed_letter
+      print "Is the letter, '#{guessed_letter}', in your word? (y/n) "
       response = gets.chomp
       raise UserError if response =~ /[^y|n|Y|N]/
     rescue UserError
@@ -29,13 +28,14 @@ class HumanPlayer
     begin
       print "Where does this letter occur? (enter numbers separated by commas) "
       positions = gets.chomp
-      raise UserError if positions =~ /[^0-9|,]/
+      raise UserError if positions =~ /[^0-9|,|\s]/
     rescue UserError
       puts "Enter numbers separated by commas!"
       retry
     end
     
-    positions.split(/,/).map(&:to_i)  
+    # Decrement each position by 1 to account for 0-based indexing.
+    positions.split(/,/).map { |pos| pos.to_i - 1 }  
   end
   
   def secret_word
