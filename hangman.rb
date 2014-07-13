@@ -19,6 +19,7 @@ class Hangman
     # The blank positions are occupied by nils.
     @secret_word_length = @chooser.pick_word_length
     @right_letters = Array.new(@secret_word_length)
+    @guesser.receive_word_length(@secret_word_length)
 
     until game_over?
       @round_number += 1
@@ -36,8 +37,13 @@ class Hangman
     end
     
     display_board
-    puts "The word was: #{@chooser.secret_word}"
-    puts @wrong_guesses == 6 ? "The chooser wins!" : "The guesser wins!"
+    secret_word = @chooser.secret_word
+    puts "The word was: #{secret_word}"
+    if @right_letters.join == secret_word 
+      puts "The guesser wins!"
+    else
+      puts "The chooser wins!"
+    end
   end
   
   private
