@@ -25,7 +25,8 @@ class ComputerPlayer
     end
   end
   
-  def make_guess
+  def make_guess(wrong_letters, right_letters)
+    
   end
   
 end
