@@ -7,6 +7,10 @@ class HumanPlayer
   end
   
   def make_guess
+    # Use print instead of puts so that the gets occurs on the same line in
+    # the console.
+    print "Choose a letter: "
+    gets.chomp
   end
   
 end
