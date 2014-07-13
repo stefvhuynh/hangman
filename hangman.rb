@@ -9,7 +9,7 @@ class Hangman
     @wrong_guesses_limit = wrong_guesses_limit
     @wrong_guesses = 0
     @wrong_letters = []
-    @round_number = 1
+    @round_number = 0
     @secret_word_length
     @word_container
   end
@@ -21,10 +21,19 @@ class Hangman
     until game_over?
       @round_number += 1
       
-      display_board
-      guessed_letter = @guesser.make_guess
-      guess_response = @chooser.respond_to_guess(guessed_letter)
+      # Raises a custom error when the guesser guesses a letter that has 
+      # already been guessed and retries.
+      begin
+        display_board
+        guessed_letter = @guesser.make_guess
+        raise GuessError if @wrong_letters.include?(guessed_letter) || 
+                            @word_container.include?(guessed_letter)
+      rescue GuessError
+        puts "Already guessed that letter!"
+        retry
+      end
       
+      guess_response = @chooser.respond_to_guess(guessed_letter)
       unless guess_response.empty?
         update_word_container(guessed_letter, guess_response)
       else
@@ -62,6 +71,12 @@ class Hangman
     puts render_word
   end
   
+end
+
+class GuessError < StandardError
+  def initialize(msg = "GuessError: letter has already been guessed")
+    super
+  end
 end
 
 
